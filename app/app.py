@@ -54,8 +54,8 @@ def stop():
 
     btn_start.config(state=tk.NORMAL)
 
-def list():
-    print("listando")
+# def list():
+#     print("listando")
 
 def update_counter():
     if counting:
@@ -87,8 +87,8 @@ btn_start.pack(pady=10)
 btn_stop = tk.Button(window, text="PARAR", command=stop, state=tk.DISABLED, **botao_estilo)
 btn_stop.pack(pady=10)
 
-btn_ver = tk.Button(window, text="VER", command=list, **botao_estilo)
-btn_ver.pack(pady=10)
+# btn_list = tk.Button(window, text="VER", command=list, **botao_estilo)
+# btn_list.pack(pady=10)
 
 label_name = tk.Label(window, text="Insira o nome da call:", bg="#9370DB", fg="white", font=("Arial", 12))
 input_name = tk.Entry(window, font=("Arial", 12), width=30)
