@@ -18,7 +18,7 @@ FORMAT = pyaudio.paInt16  # Tipo de formato
 CHANNELS = 1  # Número de canais (mono)
 RATE = 44100  # Taxa de amostragem (frequência de amostragem)
 CHUNK = 1024  # Tamanho do buffer
-RECORD_SECONDS = 10  # Duração da gravação (30 segundos)
+RECORD_SECONDS = 30  # Duração da gravação (30 segundos)
 OUTPUT_FILENAME_TEMPLATE = "gravacao_{}.wav"  # Nome do arquivo de saída
 
 def handler(signum, frame):
@@ -28,7 +28,7 @@ def handler(signum, frame):
 
 signal.signal(signal.SIGINT, handler)
 
-def gravar_audio(filename):
+def record_audio(filename):
     global file, text, nr_filename
     p = pyaudio.PyAudio()
     stream = p.open(format=FORMAT,
@@ -79,11 +79,11 @@ def do_requests():
         return
     post_transcription(audio_chunk, text)
 
-def gravacao_thread():
+def record_thread():
     global recording, counter
     while recording:
         filename = OUTPUT_FILENAME_TEMPLATE.format(counter)    
-        gravar_audio(filename)
+        record_audio(filename)
         print("Gravando")
         api_thread = threading.Thread(target=do_requests)
         api_thread.daemon = True
@@ -94,7 +94,7 @@ def start_recording():
     global recording
     if not recording: 
         recording = True
-        thread = threading.Thread(target=gravacao_thread)
+        thread = threading.Thread(target=record_thread)
         thread.daemon = True 
         thread.start()
         print("Gravação iniciada")
